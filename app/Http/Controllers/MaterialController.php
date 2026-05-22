@@ -6,10 +6,24 @@ use Illuminate\Http\Request;
 
 class MaterialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $materials = Material::with('supplier')->latest()->paginate(15);
-        return view('materials.index', compact('materials'));
+        if ($request->filled('supplier_id')) {
+            $request->validate([
+                'supplier_id' => 'exists:suppliers,supplier_id',
+            ]);
+        }
+
+        $materials = Material::query()
+            ->with('supplier')
+            ->when($request->filled('supplier_id'), fn ($q) => $q->where('supplier_id', $request->supplier_id))
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        $suppliers = Supplier::orderBy('supplier_name')->get();
+
+        return view('materials.index', compact('materials', 'suppliers'));
     }
 
     public function create()
@@ -26,7 +40,7 @@ class MaterialController extends Controller
             'unit_price'    => 'required|numeric|min:0',
             'supplier_id'   => 'required|exists:suppliers,supplier_id',
         ]);
-        Material::create($request->all());
+        Material::create($request->only(['material_name', 'brand', 'unit', 'unit_price', 'supplier_id']));
         return redirect()->route('materials.index')->with('success', 'Material added successfully.');
     }
 
@@ -44,12 +58,17 @@ class MaterialController extends Controller
             'unit_price'    => 'required|numeric|min:0',
             'supplier_id'   => 'required|exists:suppliers,supplier_id',
         ]);
-        $material->update($request->all());
+        $material->update($request->only(['material_name', 'brand', 'unit', 'unit_price', 'supplier_id']));
         return redirect()->route('materials.index')->with('success', 'Material updated successfully.');
     }
 
-    public function destroy(Material $material)
+    public function destroy($materialId)
     {
+        $material = Material::find($materialId);
+        if (! $material) {
+            return redirect()->route('materials.index')->with('success', 'Material was already removed.');
+        }
+
         $material->delete();
         return redirect()->route('materials.index')->with('success', 'Material deleted.');
     }

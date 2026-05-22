@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Billing')
 @section('content')
-<div class="mb-3"><a href="{{ route('billing.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Billing</a></div>
+<div class="mb-3"><a href="{{ route('billing.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Billing</a></div>
 <div class="page-title">Edit Billing Record</div>
 <div class="page-subtitle">Update billing information</div>
 <div class="card" style="max-width:640px;">
@@ -44,12 +44,8 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label">Payment Status <span class="text-danger">*</span></label>
-                <select name="payment_status" class="form-select" required>
-                    @foreach(['Unpaid','Partial','Paid'] as $s)
-                    <option value="{{ $s }}" {{ old('payment_status', $billing->payment_status) == $s ? 'selected' : '' }}>{{ $s }}</option>
-                    @endforeach
-                </select>
+                <label class="form-label">Payment Status (auto-updated)</label>
+                <input type="text" class="form-control" value="{{ $billing->payment_status }}" readonly style="background:#f8f9fa;">
             </div>
             <div class="d-flex gap-2 mt-2">
                 <button type="submit" class="btn btn-danger px-4"><i class="bi bi-check-lg me-1"></i>Update Billing</button>

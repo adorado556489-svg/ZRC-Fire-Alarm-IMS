@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Assign Material to Project')
 @section('content')
-<div class="mb-3"><a href="{{ route('project-materials.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Project Materials</a></div>
+<div class="mb-3"><a href="{{ route('project-materials.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Project Materials</a></div>
 <div class="page-title">Assign Material to Project</div>
 <div class="page-subtitle">Link a material to a specific project</div>
 <div class="card" style="max-width:640px;">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Total Cost (&#8369;) <small class="text-muted">auto-computed</small></label>
-                    <input type="number" step="0.01" name="total_cost" id="total_cost" class="form-control" value="{{ old('total_cost') }}" readonly style="background:#f8f9fa;">
+                    <input type="number" step="0.01" id="total_cost" class="form-control" value="{{ old('total_cost') }}" readonly style="background:#f8f9fa;">
                 </div>
             </div>
             <div class="row">
@@ -70,12 +70,14 @@
 <script>
 function computeCost() {
     const sel = document.getElementById('materialSelect');
-    const qty = document.getElementById('quantity').value;
+    const qtyInput = document.getElementById('quantity');
+    const qty = qtyInput.value;
     const opt = sel.options[sel.selectedIndex];
     const price = opt ? parseFloat(opt.dataset.price) || 0 : 0;
     document.getElementById('total_cost').value = (price * (qty || 0)).toFixed(2);
 }
 document.getElementById('materialSelect').addEventListener('change', computeCost);
 document.getElementById('quantity').addEventListener('input', computeCost);
+computeCost();
 </script>
 @endsection

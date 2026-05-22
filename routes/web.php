@@ -16,8 +16,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// All routes protected by Breeze auth middleware
-Route::middleware(['auth', 'verified'])->group(function () {
+// All routes protected by admin auth middleware
+Route::middleware(['auth'])->group(function () {
 
     // Overrides Breeze's default empty dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Client Details')
 @section('content')
-<div class="mb-3"><a href="{{ route('clients.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Clients</a></div>
+<div class="mb-3"><a href="{{ route('clients.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Clients</a></div>
 <div class="d-flex justify-content-between align-items-start mb-3">
     <div><div class="page-title">{{ $client->full_name }}</div><div class="page-subtitle">Client Details</div></div>
     <a href="{{ route('clients.edit', $client) }}" class="btn btn-danger"><i class="bi bi-pencil me-1"></i>Edit</a>

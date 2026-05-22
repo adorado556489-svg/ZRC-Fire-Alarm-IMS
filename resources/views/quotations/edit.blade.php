@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Quotation')
 @section('content')
-<div class="mb-3"><a href="{{ route('quotations.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Quotations</a></div>
+<div class="mb-3"><a href="{{ route('quotations.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Quotations</a></div>
 <div class="page-title">Edit Quotation</div>
 <div class="page-subtitle">Update pre-project bid details</div>
 <div class="card" style="max-width:780px;">

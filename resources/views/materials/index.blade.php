@@ -1,9 +1,20 @@
 @extends('layouts.app')
 @section('title', 'Materials')
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
     <div><div class="page-title">Materials</div><div class="page-subtitle">Fire alarm materials and equipment catalog</div></div>
-    <a href="{{ route('materials.create') }}" class="btn btn-danger"><i class="bi bi-plus-lg me-1"></i>Add Material</a>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <form method="GET" action="{{ route('materials.index') }}" class="m-0">
+            <label class="visually-hidden" for="filterSupplier">Filter by supplier</label>
+            <select name="supplier_id" id="filterSupplier" class="form-select form-select-sm" style="min-width:220px" onchange="this.form.submit()">
+                <option value="">All Suppliers</option>
+                @foreach($suppliers as $supplier)
+                <option value="{{ $supplier->supplier_id }}" @selected((string) request('supplier_id') === (string) $supplier->supplier_id)>{{ $supplier->supplier_name }}</option>
+                @endforeach
+            </select>
+        </form>
+        <a href="{{ route('materials.create') }}" class="btn btn-danger"><i class="bi bi-plus-lg me-1"></i>Add Material</a>
+    </div>
 </div>
 <div class="card">
     <div class="card-body p-0">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Client')
 @section('content')
-<div class="mb-3"><a href="{{ route('clients.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Clients</a></div>
+<div class="mb-3"><a href="{{ route('clients.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Clients</a></div>
 <div class="page-title">Edit Client</div>
 <div class="page-subtitle">Update client information</div>
 <div class="card" style="max-width:640px;">

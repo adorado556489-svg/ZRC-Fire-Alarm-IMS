@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Add Supplier')
 @section('content')
-<div class="mb-3"><a href="{{ route('suppliers.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Suppliers</a></div>
+<div class="mb-3"><a href="{{ route('suppliers.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Suppliers</a></div>
 <div class="page-title">Add Supplier</div><div class="page-subtitle">Register a new material supplier</div>
 <div class="card" style="max-width:600px;"><div class="card-body p-4">
     <form action="{{ route('suppliers.store') }}" method="POST">@csrf

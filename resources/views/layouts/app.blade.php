@@ -81,6 +81,8 @@
         .btn { font-size: 13.5px; border-radius: 7px; }
         .page-title { font-size: 20px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
         .page-subtitle { font-size: 13px; color: #6c757d; margin-bottom: 20px; }
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
+        .topbar-user { font-size: 13px; color: #6c757d; }
     </style>
 </head>
 <body>
@@ -127,7 +129,22 @@
 <div class="main-content">
     <div class="topbar">
         <h5>@yield('title', 'Dashboard')</h5>
-        <span style="font-size:13px; color:#6c757d;"><i class="bi bi-fire text-danger"></i> ZRC Fire Alarm Retailing System</span>
+        <div class="topbar-actions">
+            @auth
+                <span class="topbar-user">
+                    <i class="bi bi-person-circle"></i>
+                    {{ auth()->user()->display_name ?? auth()->user()->username }}
+                </span>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </form>
+            @else
+                <span class="topbar-user"><i class="bi bi-fire text-danger"></i> ZRC Fire Alarm Retailing System</span>
+            @endauth
+        </div>
     </div>
     <div class="content-area">
         @if(session('success'))

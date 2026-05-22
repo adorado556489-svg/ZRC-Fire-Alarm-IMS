@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Quotation Details')
 @section('content')
-<div class="mb-3"><a href="{{ route('quotations.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Quotations</a></div>
+<div class="mb-3"><a href="{{ route('quotations.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Quotations</a></div>
 @php $colors = ['Pending' => 'warning', 'Approved' => 'success', 'Rejected' => 'danger']; @endphp
 <div class="d-flex justify-content-between align-items-start mb-3">
     <div>

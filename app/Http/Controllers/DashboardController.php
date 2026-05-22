@@ -1,22 +1,39 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Models\Client;
-use App\Models\Project;
-use App\Models\Material;
+
 use App\Models\Billing;
+use App\Models\Client;
+use App\Models\Material;
+use App\Models\Project;
+use App\Models\VwBillingSummary;
+use App\Models\VwProjectDetails;
+use App\Models\VwProjectOverview;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $counts = [
-            'clients'   => Client::count(),
-            'projects'  => Project::count(),
+            'clients' => Client::count(),
+            'projects' => Project::count(),
             'materials' => Material::count(),
-            'billing'   => Billing::count(),
+            'billing' => Billing::count(),
         ];
-        $recentProjects = Project::with('client')->latest()->take(6)->get();
-        $recentBilling  = Billing::with('project')->latest()->take(5)->get();
-        return view('dashboard', compact('counts', 'recentProjects', 'recentBilling'));
+        $recentProjects = VwProjectOverview::query()
+            ->orderByDesc('project_id')
+            ->take(6)
+            ->get();
+        $recentBilling = VwBillingSummary::query()
+            ->orderByDesc('billing_date')
+            ->orderByDesc('billing_id')
+            ->take(5)
+            ->get();
+        $recentProjectMaterials = VwProjectDetails::query()
+            ->orderByDesc('proj_mat_id')
+            ->take(6)
+            ->get();
+
+        return view('dashboard', compact('counts', 'recentProjects', 'recentBilling', 'recentProjectMaterials'));
     }
 }

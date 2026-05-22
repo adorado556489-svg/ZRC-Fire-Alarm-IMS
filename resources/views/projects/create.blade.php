@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Add Project')
 @section('content')
-<div class="mb-3"><a href="{{ route('projects.index') }}" class="text-muted text-decoration-none" style="font-size:13px;"><i class="bi bi-arrow-left me-1"></i>Back to Projects</a></div>
+<div class="mb-3"><a href="{{ route('projects.index') }}" class="btn btn btn-outline-dark btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Projects</a></div>
 <div class="page-title">Create Project from Approved Quotation</div>
 <div class="page-subtitle">Execution starts only after quotation approval</div>
 <div class="card" style="max-width:780px;">

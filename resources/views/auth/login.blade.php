@@ -1,47 +1,119 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>ZRC Fire Alarm - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+        }
+        .login-header {
+            background: #c0392b;
+            color: #fff;
+            border-radius: 12px 12px 0 0;
+            padding: 20px 24px;
+        }
+        .login-header h4 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .login-header p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            opacity: .9;
+        }
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+        }
+        .form-control {
+            border-radius: 8px;
+            font-size: 14px;
+            padding: 10px 12px;
+        }
+        .btn-login {
+            background: #c0392b;
+            border-color: #c0392b;
+            border-radius: 8px;
+            font-size: 14px;
+            padding: 10px 12px;
+            font-weight: 600;
+        }
+        .btn-login:hover {
+            background: #a93226;
+            border-color: #a93226;
+        }
+    </style>
+</head>
+<body>
+    <div class="card login-card">
+        <div class="login-header">
+            <h4><i class="bi bi-fire me-2"></i>ZRC Fire Alarm</h4>
+            <p>Retailing System Admin Login</p>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+        <div class="card-body p-4">
+            @if (session('status'))
+                <div class="alert alert-info py-2">{{ session('status') }}</div>
             @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input
+                        id="username"
+                        type="text"
+                        name="username"
+                        value="{{ old('username') }}"
+                        class="form-control @error('username') is-invalid @enderror"
+                        required
+                        autofocus
+                        autocomplete="username"
+                    >
+                    @error('username')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        class="form-control @error('password') is-invalid @enderror"
+                        required
+                        autocomplete="current-password"
+                    >
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-danger btn-login w-100">Log in</button>
+            </form>
         </div>
-    </form>
-</x-guest-layout>
+    </div>
+</body>
+</html>
